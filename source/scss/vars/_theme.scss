@@ -1,0 +1,35 @@
+/*_theme.scss */
+.body-theme{
+    background-color: #c4c8cc;
+    color: #404448;
+}
+.theme-default{
+  background-color: complement( teal );
+    p,h1,h2,h3,h4{
+        color: #ededed;
+        text-shadow: 0.0425em 0.0575em 0 rgba( lightgray, 0.4);
+    }
+}
+.theme-alt{
+    background-color: teal;
+    p,h1,h2,h3,h4{
+        color: #ededed;
+        text-shadow: 0.0625em 0.0875em 0 rgba( black, 0.4);
+    }
+}
+
+.theme-light{
+    background-color: #ededed;
+    p,h1,h2,h3,h4{
+        color: #404040;
+        text-shadow: 0.0425em 0.0575em 0 rgba( gray, 0.4);
+    }
+}
+
+.theme-dark{
+    background-color:#404040;
+    p,h1,h2,h3,h4{
+        color: #ededed;
+        text-shadow: 0.0625em 0.0875em 0 rgba( black, 0.4);
+    }
+}

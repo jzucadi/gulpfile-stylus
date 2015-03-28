@@ -1,0 +1,38 @@
+{
+  "name": "MyGulpFlow",
+  "version": "1.0.1",
+  "description": "This is my gulpfile that I use in my projects.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "gulp --dev"
+  },
+  "dependencies": {
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-changed": "*",
+    "gulp-cli": "*",
+    "gulp-concat": "*",
+    "gulp-ftp": "*",
+    "gulp-if": "*",
+    "gulp-jade": "*",
+    "gulp-jade-php": "*",
+    "gulp-jshint": "*",
+    "gulp-notify": "*",
+    "gulp-plumber": "*",
+    "gulp-rename": "*",
+    "gulp-rsync": "*",
+    "gulp-sass": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*",
+    "gulp-zip": "*",
+    "jshint-stylish": "*"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp-load-plugins": "*",
+    "browser-sync": "*",
+    "yargs": "*",
+    "del": "*"
+  }
+}
