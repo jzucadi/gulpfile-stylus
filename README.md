@@ -2,7 +2,8 @@
 
 * Gulp
 * Jade
-* Sass
+* Stylus
+* Jeet
 
 ```
 $ npm i
