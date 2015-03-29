@@ -21,7 +21,7 @@
     "gulp-plumber": "*",
     "gulp-rename": "*",
     "gulp-rsync": "*",
-    "gulp-sass": "*",
+    "gulp-stylus": "*",
     "gulp-uglify": "*",
     "gulp-util": "*",
     "gulp-zip": "*",

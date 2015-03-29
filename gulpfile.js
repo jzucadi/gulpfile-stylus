@@ -31,7 +31,8 @@ var displayError = function(error) {
 
 var paths = {
   styles: {
-    src:    'source/scss/**/*.scss',
+    src:    'source/stylus/main.styl',
+    watch:    'source/stylus/**/*.styl',
     dest:   'build/css',
     build:  'app/css'
     },
@@ -59,7 +60,7 @@ var paths = {
 gulp.task('styles', function() {
   gulp.src(paths.styles.src)
     .pipe($.changed(paths.styles.dest))
-      .pipe($.sass({style: 'compressed',errLogToConsole: false}))
+      .pipe($.stylus({compress: true,errLogToConsole: false}))
       .on('error', function(err)  { displayError(err);    })
       .pipe($.autoprefixer({browser: ['last 2 version','Firefox ESR', 'Opera 12.1','ie10','ie11'],cascade: true} ))
       .pipe($.rename({ suffix: '.min' }))
@@ -154,7 +155,7 @@ gulp.task('server', function() {
     browserSync(config);
 
   gulp.watch(paths.scripts.src,  ['scripts']);
-  gulp.watch(paths.styles.src,   ['styles']);
+  gulp.watch(paths.styles.watch,   ['styles']);
   gulp.watch(paths.html.src,     ['html']);
 });
 
