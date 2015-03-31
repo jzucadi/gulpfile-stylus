@@ -1,9 +1,14 @@
 // Author -> CreativeKoen
 var gulp          = require('gulp');
-var args          = require('yargs').argv;
 var $             = require('gulp-load-plugins')();
+
+var args          = require('yargs').argv;
 var browserSync   = require('browser-sync');
 var reload        = browserSync.reload;
+
+var nib           = require('nib');
+var rupture       = require('rupture');
+var jeet          = require('jeet');
 
 var pkg           = require('./package.json');
 //var secrets   	  = require('./secrets.json');
@@ -17,11 +22,11 @@ var dev           = !!(args.dev); // true if --production
 
 var displayError = function(error) {
     var errorString = '[' + error.plugin + ']';
-    errorString += ' ' + error.message.replace("\n",''); // Removes new line at the end
+        errorString += ' ' + error.message.replace("\n",''); // Removes new line at the end
     if(error.fileName)
-        errorString += ' in ' + error.fileName;
+        errorString += ' in ' + error.fileName + '\n';
     if(error.lineNumber)
-        errorString += ' on line ' + error.lineNumber;
+        errorString += ' on line ' + error.lineNumber + '\n';
     console.error(errorString);
 }
 
@@ -60,7 +65,11 @@ var paths = {
 gulp.task('styles', function() {
   gulp.src(paths.styles.src)
     .pipe($.changed(paths.styles.dest))
-      .pipe($.stylus({compress: true,errLogToConsole: false}))
+      .pipe($.stylus({
+            compress: true,
+            errLogToConsole: false,
+            use: [nib(), rupture(), jeet()]
+          }))
       .on('error', function(err)  { displayError(err);    })
       .pipe($.autoprefixer({browser: ['last 2 version','Firefox ESR', 'Opera 12.1','ie10','ie11'],cascade: true} ))
       .pipe($.rename({ suffix: '.min' }))
@@ -155,7 +164,7 @@ gulp.task('server', function() {
     browserSync(config);
 
   gulp.watch(paths.scripts.src,  ['scripts']);
-  gulp.watch(paths.styles.watch,   ['styles']);
+  gulp.watch(paths.styles.watch, ['styles']);
   gulp.watch(paths.html.src,     ['html']);
 });
 

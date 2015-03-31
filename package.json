@@ -25,7 +25,10 @@
     "gulp-uglify": "*",
     "gulp-util": "*",
     "gulp-zip": "*",
-    "jshint-stylish": "*"
+    "jeet": "^6.1.2",
+    "jshint-stylish": "*",
+    "nib": "^1.1.0",
+    "rupture": "^0.6.1"
   },
   "author": "",
   "license": "ISC",
