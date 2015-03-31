@@ -1,0 +1,12 @@
+[*.styl]
+indent_style = tab
+indent_size = 2
+
+
+[*.jade]
+indent_style = tab
+indent_size = 2
+
+[*.js]
+indent_style = tab
+indent_size = 4
