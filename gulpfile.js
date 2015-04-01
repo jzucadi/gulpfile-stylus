@@ -64,11 +64,9 @@ var paths = {
 */
 gulp.task('styles', function() {
   gulp.src(paths.styles.src)
-    .pipe($.changed(paths.styles.dest))
+    //.pipe($.changed(paths.styles.dest))
       .pipe($.stylus({
-            compress: true,
-            errLogToConsole: false,
-            use: [nib(), rupture(), jeet()]
+            use: [ nib(), rupture(), jeet() ]
           }))
       .on('error', function(err)  { displayError(err);    })
       .pipe($.autoprefixer({browser: ['last 2 version','Firefox ESR', 'Opera 12.1','ie10','ie11'],cascade: true} ))
