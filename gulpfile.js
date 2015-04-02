@@ -1,11 +1,27 @@
-// Author -> CreativeKoen
+/*
+
+
+
+
+-------------------------------------------------------
+ Author:    CreativeKoen
+ Github:    github.com/CreativeKoen
+ Repo:      https://github.com/CreativeKoen/gulpfile-stylus
+-------------------------------------------------------
+
+
+
+
+*/
 var gulp          = require('gulp');
 var $             = require('gulp-load-plugins')();
 
 var args          = require('yargs').argv;
+
 var browserSync   = require('browser-sync');
 var reload        = browserSync.reload;
 
+var marked        = require('marked');
 var nib           = require('nib');
 var rupture       = require('rupture');
 var jeet          = require('jeet');
@@ -16,7 +32,16 @@ var pkg           = require('./package.json');
 var production    = !!(args.production); // true if --production
 var dev           = !!(args.dev); // true if --production
 
-
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false
+});
 
 
 
@@ -36,20 +61,20 @@ var displayError = function(error) {
 
 var paths = {
   styles: {
-    src:    'source/stylus/main.styl',
-    watch:    'source/stylus/**/*.styl',
-    dest:   'build/css',
-    build:  'app/css'
+        src:    'source/stylus/main.styl',
+        watch:  'source/stylus/**/*.styl',
+        dest:   'build/css',
+        build:  'app/css'
     },
   scripts: {
-    src:    'source/js/*.js',
-    dest:   'build/js',
-    build:  'app/js'
+        src:    'source/js/*.js',
+        dest:   'build/js',
+        build:  'app/js'
     },
   html: {
-    src:    'source/*.jade',
-    dest:   'build/',
-    build:  'app/'
+        src:    'source/*.jade',
+        dest:   'build/',
+        build:  'app/'
     }
 }
 
@@ -64,8 +89,10 @@ var paths = {
 */
 gulp.task('styles', function() {
   gulp.src(paths.styles.src)
-    //.pipe($.changed(paths.styles.dest))
+    .pipe($.changed(paths.styles.dest))
       .pipe($.stylus({
+            compress: false,
+            errLogToConsole: true,
             use: [ nib(), rupture(), jeet() ]
           }))
       .on('error', function(err)  { displayError(err);    })
@@ -93,6 +120,8 @@ gulp.task('scripts', function() {
       .pipe($.jshint.reporter($.jshintStylish))
       .pipe($.plumber())
       .pipe($.uglify())
+      .pipe($.if(args.dev, $.uglify()))
+      .pipe($.if(args.production, $.uglify()))
       .pipe($.concat('main.js'))
       .pipe($.rename({ suffix: '.min' }))
     .pipe($.if(args.dev, gulp.dest(paths.scripts.dest)))
@@ -112,7 +141,8 @@ gulp.task('scripts', function() {
 gulp.task('html', function(){
     gulp.src(paths.html.src)
     .pipe($.changed(paths.html.dest))
-        .pipe($.jade({pretty: false}))
+      .pipe($.if(args.dev, $.jade({pretty: true, markdown: marked})))
+      .pipe($.if(args.production, $.jade({pretty: false, markdown: marked})))
         .on('error', function(err)  { displayError(err);    })
         .pipe($.if(args.dev, gulp.dest(paths.html.dest)))
         .pipe($.if(args.production, gulp.dest(paths.html.build) ))
@@ -129,15 +159,16 @@ gulp.task('html', function(){
     Php
 -------------------------------------------------------
 */
-gulp.task('php', function(){
+gulp.task('html:php', function(){
     gulp.src(paths.html.src)
     .pipe($.changed(paths.html.dest))
-      .pipe($.jadePhp({pretty: false}))
+      .pipe($.if(args.dev, $.jadePhp({pretty: true})))
+      .pipe($.if(args.production, $.jadePhp({pretty: false})))
         .on('error', function(err)  { displayError(err);    })
         .pipe($.if(args.dev, gulp.dest(paths.html.dest)))
         .pipe($.if(args.production, gulp.dest(paths.html.build) ))
       .pipe(browserSync.reload({stream:true}))
-      .pipe($.notify({ message: 'Jade compiled to html' }));
+      .pipe($.notify({ message: 'Jade compiled to php' }));
 });
 
 
@@ -151,7 +182,7 @@ gulp.task('php', function(){
 */
 var config = {
     //proxy:      'local.example',
-    notify:     false,
+    notify:     true,
     logPrefix:  'CreativeKoen',
     server: {
         baseDir:    './build',
@@ -172,7 +203,10 @@ gulp.task('server', function() {
 
 
 gulp.task('default', ['scripts', 'styles','html','server']);
-gulp.task('php', ['scripts', 'styles','php','server']);
+gulp.task('php', ['scripts', 'styles','html:php','server']);
+
+
+
 
 /*
 -------------------------------------------------------
@@ -180,9 +214,9 @@ gulp.task('php', ['scripts', 'styles','php','server']);
 -------------------------------------------------------
 */
 gulp.task('archive', function(){
-  gulp.src(['temp/**/*'])
+  gulp.src(['build/**/*'])
   .pipe($.zip(pkg.name + '-' + pkg.version + '.zip'))
-  .pipe(gulp.dest('/'));
+  .pipe(gulp.dest('./'));
 });
 
 
