@@ -7,6 +7,8 @@
     "start": "gulp --dev"
   },
   "dependencies": {
+    "browser-sync": "*",
+    "del": "*",
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-changed": "*",
@@ -17,6 +19,7 @@
     "gulp-jade": "*",
     "gulp-jade-php": "*",
     "gulp-jshint": "*",
+    "gulp-load-plugins": "*",
     "gulp-notify": "*",
     "gulp-plumber": "*",
     "gulp-rename": "*",
@@ -25,17 +28,13 @@
     "gulp-uglify": "*",
     "gulp-util": "*",
     "gulp-zip": "*",
-    "jeet": "^6.1.2",
+    "jeet": "*",
     "jshint-stylish": "*",
-    "nib": "^1.1.0",
-    "rupture": "^0.6.1"
+    "marked": "^0.3.3",
+    "nib": "*",
+    "rupture": "*",
+    "yargs": "*"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "gulp-load-plugins": "*",
-    "browser-sync": "*",
-    "yargs": "*",
-    "del": "*"
-  }
+  "license": "ISC"
 }
