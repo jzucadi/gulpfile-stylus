@@ -17,6 +17,7 @@
     "gulp-jade": "*",
     "gulp-jade-php": "*",
     "gulp-jshint": "*",
+    "gulp-minify-css": "*",
     "gulp-notify": "*",
     "gulp-plumber": "*",
     "gulp-rename": "*",
