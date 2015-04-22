@@ -71,6 +71,7 @@ gulp.task('styles', function() {
       .on('error', function(err)  { displayError(err);    })
       .pipe($.autoprefixer({browser: ['last 2 version','Firefox ESR', 'Opera 12.1','ie10','ie11'],cascade: true} ))
       .pipe($.rename({ suffix: '.min' }))
+      .pipe($.minifyCss)
       .pipe($.if(args.dev, gulp.dest(paths.styles.dest)))
       .pipe($.if(args.production, gulp.dest(paths.styles.build) ))
     .pipe(browserSync.reload({stream:true}))
